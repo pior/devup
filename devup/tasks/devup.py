@@ -1,5 +1,5 @@
-import os
 import textwrap
+from pathlib import Path
 
 from . import Task, TaskShouldNotRun
 
@@ -8,9 +8,10 @@ class Devup(Task):
     action_message = 'Creating an initial devup.yml'
     post_message = 'Open `devup.yml` and configure it for your project.'
 
-    filename = 'devup.yml'
-    content = """
-        # File created by 'de init'
+    declaration = Path('devup.yml')
+    content = """# File created by 'de init'
+
+        up:
 
         test:
           # command: ./manage.py test
@@ -19,13 +20,12 @@ class Devup(Task):
     """
 
     def get_content(self):
-        return bytes(textwrap.dedent(self.content), 'utf-8')
+        return textwrap.dedent(self.content)
 
     def should_run(self):
-        if os.path.exists(self.filename):
+        if self.declaration.exists():
             return TaskShouldNotRun('A devup.yml file already exists')
         return True
 
     def run(self):
-        with open(self.filename, 'wb') as fh:
-            fh.write(self.get_content())
+        self.declaration.write_text(self.get_content())
