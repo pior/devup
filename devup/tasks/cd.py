@@ -8,7 +8,7 @@ class Cd(Task):
 
     def run(self):
         name = self._arg
-        project = Project.from_name(name)
+        project = Project.by_name(name)
         if not project:
             raise TaskFailed("Unknown project %s" % name)
         set_cd_finalizer(project.local_path)

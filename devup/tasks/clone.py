@@ -17,7 +17,7 @@ class GithubClone(Task):
 
     @property
     def _project(self):
-        return Project.from_repo(self._repo)
+        return Project.by_repo(self._repo)
 
     def should_run(self):
         if self._project.exists():

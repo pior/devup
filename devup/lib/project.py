@@ -30,12 +30,12 @@ class Project(object):
         self.remote_path = remote_path
 
     @classmethod
-    def from_repo(cls, repo):
+    def by_repo(cls, repo):
         local_path = project_path_from_id(repo.local_id)
         return cls(local_path, repo.location)
 
     @classmethod
-    def from_name(cls, name):
+    def by_name(cls, name):
         paths = list_project_dirs()
         for path in paths:
             if path.parts[-1] == name:
