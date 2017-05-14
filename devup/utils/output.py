@@ -1,3 +1,6 @@
+import sys
+
+
 # GPL v2 by http://stackoverflow.com/users/4157799/gi-jack
 # http://stackoverflow.com/a/26445590
 
@@ -37,3 +40,21 @@ class BG:
     PURPLE = '\033[45m'
     CYAN = '\033[46m'
     LIGHTGREY = '\033[47m'
+
+
+STYLES = {
+    'header': FG.YELLOW,
+    'bold': BOLD,
+    'info': FG.BLUE,
+    'success': FG.GREEN,
+    'command': FG.ORANGE,
+    'error': FG.RED,
+    'help': FG.CYAN,
+}
+
+
+def write(s, style=None):
+    if style and style in STYLES:
+        s = '%s%s%s' % (STYLES[style], s, RESET)
+    sys.stdout.write(s)
+    sys.stdout.flush()

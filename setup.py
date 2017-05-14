@@ -24,7 +24,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'de = devup.main:cli',
+            'de = devup.app:cli',
         ],
     },
 )

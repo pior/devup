@@ -2,7 +2,7 @@
 import os
 import textwrap
 
-from . import Task
+from . import Task, TaskShouldNotRun
 
 
 class Devup(Task):
@@ -23,7 +23,9 @@ class Devup(Task):
         return bytes(textwrap.dedent(self.content), 'utf-8')
 
     def should_run(self):
-        return not os.path.exists(self.filename)
+        if os.path.exists(self.filename):
+            return TaskShouldNotRun('A devup.yml file already exists')
+        return True
 
     def run(self):
         with open(self.filename, 'wb') as fh:

@@ -1,23 +1,28 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 
-from . import Task, TaskShoudNotRun
-from devup.repo import GithubRepo
-from devup.project import Project
+from . import Task, TaskShouldNotRun
+from ..integration import set_cd_finalizer
+from ..lib.project import Project
+from ..lib.repo import GithubRepo
 
 
 class GithubClone(Task):
     arguments = ['repository']
     action_message = 'Cloning repository from github'
 
-    def _init(self):
-        self._repo = GithubRepo.from_location(self._arg)
-        self._project = Project.from_repo(self._repo)
+    @property
+    def _repo(self):
+        return GithubRepo.from_location(self._arg)
+
+    @property
+    def _project(self):
+        return Project.from_repo(self._repo)
 
     def should_run(self):
         if self._project.exists():
             path = self._project.local_path
-            return TaskShoudNotRun("project already exists in %s" % path)
+            return TaskShouldNotRun("project already exists in %s" % path)
         return True
 
     def run(self):
@@ -25,3 +30,4 @@ class GithubClone(Task):
         self._run_command(
             ['git', 'clone', self._repo.location, self._project.local_path],
         )
+        set_cd_finalizer(self._project.local_path)
