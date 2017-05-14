@@ -15,7 +15,9 @@ def make_help(commands):
     def func(context):
         context.write_output('List of available commands:\n\n', 'info')
         for command in commands:
-            context.write_output('  de %-8s' % command.name, 'command')
+            args = [arg.upper() for arg in command.arguments]
+            args = ' '.join([command.name] + args)
+            context.write_output('  de %-24s' % args, 'command')
             context.write_output('   %s\n\n' % command.description, 'info')
     return func
 
