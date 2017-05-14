@@ -19,7 +19,7 @@ def list_project_dirs():
         for l2 in l1.iterdir() if l2.is_dir()
         for l3 in l2.iterdir() if l3.is_dir()
     ]
-    return dirs
+    return sorted(dirs)
 
 
 class Project(object):
