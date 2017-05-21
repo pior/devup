@@ -1,7 +1,7 @@
 from . import Command
-from ..tasks.cd import Cd
+from ..tasks import cd
 
 
 class Cd(Command):
     description = 'Change directory to a project'
-    tasks = [Cd]
+    tasks = [cd.Cd]
