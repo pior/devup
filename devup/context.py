@@ -3,7 +3,6 @@ import sys
 from pathlib import Path
 
 from .utils import output
-# from .integration import set_cd_finalizer
 from devup.lib.project import Project
 
 
@@ -21,9 +20,6 @@ class Context(object):
     @staticmethod
     def run_command(args):
         return subprocess.run(args, check=True)
-
-    # def set_cd_finalizer(self, path):
-    #     set_cd_finalizer(path)
 
     def panic(self, msg):
         self.write_output('💥 Crashed: %s\n' % msg, style='error')
