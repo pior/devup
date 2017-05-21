@@ -16,4 +16,5 @@ class Command(object):
     def _run_tasks(self, context):
         for task_class in self.tasks:
             task = task_class(context)
-            task.execute()
+            if task.applies():
+                task.execute()

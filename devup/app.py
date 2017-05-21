@@ -7,8 +7,9 @@ from .context import Context
 from .commands.cd import Cd
 from .commands.clone import Clone
 from .commands.init import Init
+from .commands.up import Up
 
-command_classes = [Init, Clone, Cd]
+command_classes = [Init, Clone, Cd, Up]
 
 
 def make_help(commands):

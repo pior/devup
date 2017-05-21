@@ -1,8 +1,10 @@
 import subprocess
 import sys
+from pathlib import Path
 
 from .utils import output
 # from .integration import set_cd_finalizer
+from devup.lib.project import Project
 
 
 class Context(object):
@@ -26,3 +28,7 @@ class Context(object):
     def panic(self, msg):
         self.write_output('💥 Crashed: %s\n' % msg, style='error')
         sys.exit(1)
+
+    @property
+    def project(self):
+        return Project(Path.cwd())

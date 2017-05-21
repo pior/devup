@@ -29,6 +29,10 @@ class Task(object):
         return self.__class__.__name__.lower()
 
     @staticmethod
+    def applies():
+        return True
+
+    @staticmethod
     def should_run():
         return True
 
