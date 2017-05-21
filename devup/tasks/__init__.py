@@ -28,7 +28,8 @@ class Task(object):
     def name(self):
         return self.__class__.__name__.lower()
 
-    def should_run(self):
+    @staticmethod
+    def should_run():
         return True
 
     def _print(self, message, style):
@@ -65,7 +66,7 @@ class Task(object):
         except Exception as err:
             exc_tb = sys.exc_info()[2]
             filename, line_num, func_name, _ = traceback.extract_tb(exc_tb)[-1]
-            del(exc_tb)
+            del exc_tb
             self._print('Crash: %s' % err, 'error')
             self._print(
                 ' in %s (%s:%s)' % (func_name, filename, line_num),

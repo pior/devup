@@ -12,10 +12,12 @@ class Context(object):
     def set_arg(self, name, value):
         setattr(self.args, name, value)
 
-    def write_output(self, s, style=None):
+    @staticmethod
+    def write_output(s, style=None):
         output.write(s, style=style)
 
-    def run_command(self, args):
+    @staticmethod
+    def run_command(args):
         return subprocess.run(args, check=True)
 
     # def set_cd_finalizer(self, path):
