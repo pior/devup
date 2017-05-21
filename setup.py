@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read(fname):
@@ -15,13 +15,16 @@ setup(
     license='BSD',
     keywords='development github',
     url='https://github.com/pior/devup',
-    packages=['devup'],
     long_description=read('README.md'),
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Topic :: Utilities',
         'License :: OSI Approved :: BSD License',
     ],
+    packages=find_packages(),
+    package_data={
+        'devup': ['files/*'],
+    },
     entry_points={
         'console_scripts': [
             'de = devup.app:cli',
