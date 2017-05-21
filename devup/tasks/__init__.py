@@ -2,6 +2,8 @@ import sys
 import traceback
 from subprocess import CalledProcessError
 
+from devup.utils import output
+
 
 class TaskShouldNotRun(Exception):
     def __bool__(self):
@@ -26,7 +28,7 @@ class Task(object):
 
     @property
     def name(self):
-        return self.__class__.__name__.lower()
+        return output.humanize(self.__class__.__name__)
 
     @staticmethod
     def applies():

@@ -1,3 +1,4 @@
+import re
 import sys
 
 
@@ -58,3 +59,7 @@ def write(s, style=None):
         s = '%s%s%s' % (STYLES[style], s, RESET)
     sys.stdout.write(s)
     sys.stdout.flush()
+
+
+def humanize(string):
+    return re.sub('([a-z0-9])([A-Z])', r'\1 \2', string)
