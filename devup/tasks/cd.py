@@ -6,7 +6,7 @@ from devup.lib.project import Project
 class Cd(Task):
     arguments = ['project']
 
-    def run(self):
+    def _run(self):
         name = self._arg
         project = Project.by_name(name)
         if not project:

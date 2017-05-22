@@ -19,13 +19,10 @@ class Devup(Task):
           # command: go test
     """
 
-    def get_content(self):
-        return textwrap.dedent(self.content)
-
-    def should_run(self):
+    def _should_run(self):
         if self.declaration.exists():
             return TaskShouldNotRun('A devup.yml file already exists')
         return True
 
-    def run(self):
-        self.declaration.write_text(self.get_content())
+    def _run(self):
+        self.declaration.write_text(textwrap.dedent(self.content))

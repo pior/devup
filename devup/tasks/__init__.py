@@ -15,6 +15,13 @@ class TaskFailed(Exception):
 
 
 class Task(object):
+    """Base class for tasks.
+
+    >>> task = MyTask(context)
+    >>> print(task.name)
+    >>> applies_to_context = task.applies()
+    >>> task.run()
+    """
     arguments = []
     action_message = False
 
@@ -32,10 +39,17 @@ class Task(object):
 
     @staticmethod
     def applies():
+        """Whether this task applies to the current context."""
         return True
 
     @staticmethod
-    def should_run():
+    def _should_run():
+        """Whether this task needs to run for the current context."""
+        return True
+
+    @staticmethod
+    def _run():
+        """Task actual action implementation."""
         return True
 
     def _print(self, message, style):
@@ -51,8 +65,8 @@ class Task(object):
             msg = 'command failed with error %s' % err.returncode
             self._context.panic(msg)
 
-    def execute(self):
-        should_run = self.should_run()
+    def run(self):
+        should_run = self._should_run()
 
         if not should_run:
             if isinstance(should_run, TaskShouldNotRun):
@@ -66,7 +80,7 @@ class Task(object):
             self._print(self.action_message, 'info')
 
         try:
-            self.run()
+            self._run()
         except TaskFailed as err:
             self._print(str(err), 'error')
         except Exception as err:
