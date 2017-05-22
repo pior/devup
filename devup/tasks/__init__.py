@@ -92,6 +92,7 @@ class Task(object):
                 ' in %s (%s:%s)' % (func_name, filename, line_num),
                 'error'
             )
+            sys.exit(1)
 
         if hasattr(self, 'post_message'):
             self._print("➡ %s" % self.post_message, 'help')
