@@ -1,14 +1,11 @@
 
 class Command(object):
     tasks = []
+    arguments = []
 
     @property
     def name(self):
         return self.__class__.__name__.lower()
-
-    @property
-    def arguments(self):
-        return {arg for task in self.tasks for arg in task.arguments}
 
     def run(self, context):
         self._run_tasks(context)
