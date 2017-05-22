@@ -1,6 +1,6 @@
-from . import Task, TaskFailed
-from ..integration import set_cd_finalizer
-from ..lib.project import Project
+from devup.tasks import Task, TaskFailed
+from devup.integration import set_cd_finalizer
+from devup.lib.project import Project
 
 
 class Cd(Task):

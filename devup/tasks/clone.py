@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from . import Task, TaskShouldNotRun
-from ..integration import set_cd_finalizer
-from ..lib.project import Project
-from ..lib.repo import GithubRepo
+from devup.tasks import Task, TaskShouldNotRun
+from devup.integration import set_cd_finalizer
+from devup.lib.project import Project
+from devup.lib.repo import GithubRepo
 
 
 class GithubClone(Task):

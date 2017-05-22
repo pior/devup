@@ -1,5 +1,5 @@
-from . import Command
-from ..tasks.clone import GithubClone
+from devup.commands import Command
+from devup.tasks.clone import GithubClone
 
 
 class Clone(Command):

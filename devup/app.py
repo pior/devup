@@ -1,13 +1,13 @@
 import argparse
 import sys
 
-from . import integration
-from .context import Context
+from devup import integration
+from devup.context import Context
 
-from .commands.cd import Cd
-from .commands.clone import Clone
-from .commands.init import Init
-from .commands.up import Up
+from devup.commands.cd import Cd
+from devup.commands.clone import Clone
+from devup.commands.init import Init
+from devup.commands.up import Up
 
 command_classes = [Init, Clone, Cd, Up]
 

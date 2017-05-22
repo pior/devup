@@ -1,7 +1,7 @@
 import textwrap
 from pathlib import Path
 
-from . import Task, TaskShouldNotRun
+from devup.tasks import Task, TaskShouldNotRun
 
 
 class Devup(Task):

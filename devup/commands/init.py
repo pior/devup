@@ -1,5 +1,5 @@
-from . import Command
-from ..tasks.devup import Devup
+from devup.commands import Command
+from devup.tasks.devup import Devup
 
 
 class Init(Command):

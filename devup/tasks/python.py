@@ -1,4 +1,4 @@
-from . import Task
+from devup.tasks import Task
 
 
 class SetuptoolsDevelop(Task):

@@ -1,5 +1,5 @@
-from . import Command
-from ..tasks.python import SetuptoolsDevelop, PipRequirements
+from devup.commands import Command
+from devup.tasks.python import SetuptoolsDevelop, PipRequirements
 
 
 class Up(Command):

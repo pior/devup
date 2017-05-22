@@ -2,7 +2,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from .utils import output
+from devup.utils import output
 from devup.lib.project import Project
 
 

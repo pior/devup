@@ -1,5 +1,5 @@
-from . import Command
-from ..tasks import cd
+from devup.commands import Command
+from devup.tasks import cd
 
 
 class Cd(Command):
