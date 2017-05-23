@@ -1,0 +1,30 @@
+# 🔥 DevUp manifest 🔥
+# https://github.com/pior/devup/blob/master/MANIFEST.md
+
+up:
+  # For a Python project:
+  # - apt:
+  #   - libpq-dev
+  #   - libxml2
+  - setuptools_develop
+  - pip_requirements
+  - custom:
+    name: cleanup
+    should_run: ls -R *.py > /dev/null 2>&1
+    command: find . -name '*.pyc' -delete
+
+  # For a Ruby project:
+  # - homebrew:
+  #   - postgresql
+  #   - libxml2
+  # - bundler
+
+test:
+  - py.test .
+
+lint:
+  - pyflakes mymodule
+  - pylint mymodule
+
+setup:
+  - python manage.py syncdb

@@ -1,6 +1,8 @@
 import os
 from setuptools import setup, find_packages
 
+install_requires = ['pyyaml']
+
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -25,6 +27,7 @@ setup(
     package_data={
         'devup': ['files/*'],
     },
+    install_requires=install_requires,
     entry_points={
         'console_scripts': [
             'de = devup.app:cli',

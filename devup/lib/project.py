@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import yaml
+
 
 def get_projects_path():
     return Path('~/src').expanduser()
@@ -43,3 +45,11 @@ class Project(object):
 
     def exists(self):
         return self.path.exists()
+
+    @property
+    def manifest(self):
+        return self.path.joinpath('devup.yml')
+
+    @property
+    def config(self):
+        return yaml.safe_load(self.manifest.open())
