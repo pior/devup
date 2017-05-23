@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 
@@ -7,8 +6,7 @@ def get_projects_path():
 
 
 def project_path_from_id(local_id):
-    path = os.path.join('~', 'src', *local_id)
-    return os.path.expanduser(path)
+    return get_projects_path().joinpath(*local_id)
 
 
 def list_project_dirs():
@@ -44,4 +42,4 @@ class Project(object):
                 return cls(path)
 
     def exists(self):
-        return os.path.exists(self.local_path)
+        return self.path.exists()
