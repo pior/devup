@@ -10,9 +10,6 @@ class Context(object):
     def __init__(self, args):
         self.args = args
 
-    def set_arg(self, name, value):
-        setattr(self.args, name, value)
-
     @staticmethod
     def write_output(s, style=None):
         output.write(s, style=style)
