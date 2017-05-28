@@ -8,6 +8,15 @@ class Command(object):
 
     def run(self, context):
         tasks = self._prepare_tasks(context)
+
+        if not tasks:
+            context.write_output(
+                "I didn't find anything to do! 😱\n"
+                "You may want to edit your devup.yml file...",
+                style='error',
+            )
+            return
+
         for task in tasks:
             if task.applies():
                 task.run()
