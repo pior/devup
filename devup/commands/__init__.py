@@ -2,10 +2,6 @@
 class Command(object):
     arguments = []
 
-    @property
-    def name(self):
-        return self.__class__.__name__.lower()
-
     def run(self, context):
         tasks = self._prepare_tasks(context)
 
