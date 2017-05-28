@@ -43,7 +43,7 @@ def make_parser(commands):
     return parser
 
 
-def main(args):
+def run(args):
     try:
         commands = [c() for c in command_classes]
 
@@ -57,6 +57,6 @@ def main(args):
         print("👋")
 
 
-def cli():
+def cli(app_function=run):
     integration.check()
-    main(sys.argv[1:])
+    app_function(sys.argv[1:])
