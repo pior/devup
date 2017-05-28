@@ -45,8 +45,6 @@ def make_parser(commands):
 
 def main(args):
     try:
-        integration.check()
-
         commands = [c() for c in command_classes]
 
         parser = make_parser(commands)
@@ -60,4 +58,5 @@ def main(args):
 
 
 def cli():
+    integration.check()
     main(sys.argv[1:])
