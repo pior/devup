@@ -87,15 +87,18 @@ class Task(object):
         except TaskFailed as err:
             self._print(str(err), 'error')
         except Exception as err:
-            exc_tb = sys.exc_info()[2]
-            filename, line_num, func_name, _ = traceback.extract_tb(exc_tb)[-1]
-            del exc_tb
-            self._print('Crash: %s' % err, 'error')
-            self._print(
-                ' in %s (%s:%s)' % (func_name, filename, line_num),
-                'error'
-            )
-            sys.exit(1)
+            self._crash(err)
 
         if hasattr(self, 'post_message'):
             self._print("➡ %s" % self.post_message, 'help')
+
+    def _crash(self, err):
+        exc_tb = sys.exc_info()[2]
+        filename, line_num, func_name, _ = traceback.extract_tb(exc_tb)[-1]
+        del exc_tb
+        self._print('Crash: %s' % err, 'error')
+        self._print(
+            ' in %s (%s:%s)' % (func_name, filename, line_num),
+            'error'
+        )
+        sys.exit(1)
