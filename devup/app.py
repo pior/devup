@@ -2,7 +2,7 @@ import argparse
 import sys
 
 from devup import integration
-from devup.context import Context
+from devup.lib.context import Context
 
 from devup.commands.cd import Cd
 from devup.commands.clone import Clone
