@@ -10,7 +10,15 @@ class TaskShouldNotRun(Exception):
         return False
 
 
-class TaskFailed(Exception):
+class TaskError(Exception):
+    pass
+
+
+class TaskFailed(TaskError):
+    pass
+
+
+class TaskConfigError(TaskError):
     pass
 
 
@@ -25,8 +33,9 @@ class Task(object):
     arguments = []
     action_message = False
 
-    def __init__(self, context):
+    def __init__(self, context, config=None):
         self._context = context
+        self._config = config
 
     @property
     def _arg(self, name=None):
@@ -65,8 +74,7 @@ class Task(object):
         try:
             return self._context.run_command(args)
         except subprocess.CalledProcessError as err:
-            msg = 'command failed with error %s' % err.returncode
-            self._context.panic(msg)
+            self._context.exit('command failed with error %s' % err.returncode)
 
     def run(self):
         should_run = self._should_run()
@@ -86,6 +94,11 @@ class Task(object):
             self._run()
         except TaskFailed as err:
             self._print(str(err), 'error')
+        except TaskConfigError as err:
+            self._print(
+                "%s\nConfig section: %s" % (err, self._config),
+                'error',
+            )
         except Exception as err:
             self._crash(err)
 

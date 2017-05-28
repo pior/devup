@@ -7,11 +7,11 @@ up:
   #   - libpq-dev
   #   - libxml2
   - setuptools_develop
-  - pip_requirements
+  - pip
   - custom:
-    name: cleanup
-    should_run: ls -R *.py > /dev/null 2>&1
-    command: find . -name '*.pyc' -delete
+      name: cleanup
+      should_run: ls -R *.py > /dev/null 2>&1
+      command: find . -name '*.pyc' -delete
 
   # For a Ruby project:
   # - homebrew:

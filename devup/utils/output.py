@@ -50,6 +50,7 @@ STYLES = {
     'success': FG.GREEN,
     'command': FG.ORANGE,
     'error': FG.RED,
+    'warning': FG.LIGHTRED,
     'help': FG.CYAN,
 }
 

@@ -2,6 +2,8 @@ from devup.tasks import Task
 
 
 class SetuptoolsDevelop(Task):
+    name = 'setuptools_develop'
+
     def applies(self):
         return self._context.project.path.joinpath('setup.py').exists()
 
@@ -22,6 +24,8 @@ def find_requirements_file(path):
 
 
 class PipRequirements(Task):
+    name = 'pip'
+
     @property
     def _requirements_file(self):
         path = find_requirements_file(self._context.project.path)

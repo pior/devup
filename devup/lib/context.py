@@ -18,9 +18,16 @@ class Context(object):
     def run_command(args):
         return subprocess.run(args, check=True)
 
-    def panic(self, msg):
+    def crash(self, msg):
         self.write_output('💥 Crashed: %s\n' % msg, style='error')
         sys.exit(1)
+
+    def exit(self, msg, style='error'):
+        self.write_output('%s\n' % msg, style='error')
+        sys.exit(1)
+
+    def warning(self, msg):
+        self.write_output('%s\n' % msg, style='warning')
 
     @property
     def project(self):
