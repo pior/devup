@@ -1,6 +1,6 @@
+import subprocess
 import sys
 import traceback
-import subprocess
 
 from devup.utils import output
 

@@ -1,7 +1,9 @@
 import argparse
+import os
 import sys
 
 from devup import integration
+from devup.lib.config import Config
 from devup.lib.context import Context
 
 from devup.commands.cd import Cd
@@ -43,7 +45,7 @@ def make_parser(commands):
     return parser
 
 
-def run(args):
+def run(args, env):
     try:
         commands = [c() for c in command_classes]
 
@@ -51,7 +53,8 @@ def run(args):
         parsed_args = parser.parse_args(args)
         command_func = parsed_args.func
 
-        context = Context(parsed_args)
+        config = Config(env)
+        context = Context(parsed_args, config)
         command_func(context)
     except KeyboardInterrupt:
         print("👋")
@@ -59,4 +62,4 @@ def run(args):
 
 def cli(app_function=run):
     integration.check()
-    app_function(sys.argv[1:])
+    app_function(sys.argv[1:], os.environ)
