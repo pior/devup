@@ -1,6 +1,6 @@
 import sys
 import traceback
-from subprocess import CalledProcessError
+import subprocess
 
 from devup.utils import output
 
@@ -59,9 +59,12 @@ class Task(object):
 
     def _run_command(self, args):
         self._print(' '.join(args), 'command')
+        return self._context.run_command(args)
+
+    def _safe_run_command(self, args):
         try:
-            self._context.run_command(args)
-        except CalledProcessError as err:
+            return self._context.run_command(args)
+        except subprocess.CalledProcessError as err:
             msg = 'command failed with error %s' % err.returncode
             self._context.panic(msg)
 

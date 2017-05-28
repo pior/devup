@@ -26,7 +26,7 @@ class GithubClone(Task):
 
     def _run(self):
         Path(self._project.local_path).parent.mkdir(exist_ok=True)
-        self._run_command(
+        self._safe_run_command(
             ['git', 'clone', self._repo.location, self._project.local_path],
         )
         set_cd_finalizer(self._project.local_path)
