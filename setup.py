@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-install_requires = ['pyyaml']
+install_requires = ['PyYAML']
 
 
 def read(fname):
