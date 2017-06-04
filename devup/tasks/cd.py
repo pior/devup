@@ -3,18 +3,23 @@ from devup.integration import set_cd_finalizer
 from devup.lib.project import Project
 
 
-def list_project_dirs(projects_path):
+def list_projects(projects_path):
+    """Return path for all existing local projects.
+
+    >>> list_projects('/home/pior/src')
+    [PosixPath('/home/pior/src/github.com/pior/devup')]
+    """
     dirs = [
-        l3
-        for l1 in projects_path.iterdir() if l1.is_dir()
-        for l2 in l1.iterdir() if l2.is_dir()
-        for l3 in l2.iterdir() if l3.is_dir()
+        project
+        for source in projects_path.iterdir() if source.is_dir()
+        for org in source.iterdir() if org.is_dir()
+        for project in org.iterdir() if project.is_dir()
     ]
     return sorted(dirs)
 
 
 def project_by_name(projects_path, name):
-    paths = list_project_dirs(projects_path)
+    paths = list_projects(projects_path)
     for path in paths:
         if path.parts[-1] == name:
             return Project(path)
@@ -28,7 +33,6 @@ class Cd(Task):
 
     def _run(self):
         name = self._arg
-
         project = project_by_name(self._context.config.projects_path, name)
         if not project:
             raise TaskFailed("Unknown project %s" % name)
