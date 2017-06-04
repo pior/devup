@@ -1,5 +1,6 @@
 # DevUp
 
+[![PyPI](https://img.shields.io/pypi/v/devup.svg)](https://pypi.python.org/pypi/devup)
 [![CircleCI](https://circleci.com/gh/pior/devup.svg?style=svg)](https://circleci.com/gh/pior/devup)
 [![codecov](https://codecov.io/gh/pior/devup/branch/master/graph/badge.svg)](https://codecov.io/gh/pior/devup)
 
