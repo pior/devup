@@ -4,12 +4,14 @@
 # This let us change the current shell (current dir and envvars)
 de() {
     # Prepare file to pass the finalize actions
-    export DEVUP_FINALIZER_FILE="$(\mktemp /tmp/devup-finalize-XXXXXX)"
+    local finalizer_file
+    finalizer_file="$(\mktemp /tmp/devup-finalize-XXXXXX)"
+
     # Be sure to cleanup this file on termination
-    \trap "rm -f '${DEVUP_FINALIZER_FILE}'" EXIT
+    \trap "rm -f '${finalizer_file}'" EXIT
 
     # Run the python devup `de` command
-    env DEVUP_SHELL=1 \de $@
+    env DEVUP_FINALIZER_FILE=$finalizer_file \de $@
     # Save the command return to restore it later
     return_code=$?
 
@@ -33,7 +35,7 @@ de() {
                 ;;
         esac
 
-    done < "${DEVUP_FINALIZER_FILE}"
+    done < "${finalizer_file}"
 
     # for fin in ${finalizers[*]}; do
     #     case "${fin}" in

@@ -8,10 +8,6 @@ import pkg_resources
 INTEGRATION_SCRIPT = 'files/devup.sh'
 
 
-def called_by_integration_script():
-    return 'DEVUP_SHELL' not in os.environ
-
-
 def get_finalizer_path():
     return os.getenv('DEVUP_FINALIZER_FILE')
 
@@ -28,11 +24,9 @@ def print_instruction():
 
 
 def check():
-    if not called_by_integration_script():
+    if not get_finalizer_path():
         print_instruction()
         sys.exit(1)
-    if not get_finalizer_path():
-        sys.exit('Shell integration error: missing finalizer path')
 
 
 def set_cd_finalizer(path):
