@@ -46,20 +46,21 @@ def make_parser(commands):
 
 
 def run(args, env):
-    try:
-        commands = [c() for c in command_classes]
+    commands = [c() for c in command_classes]
 
-        parser = make_parser(commands)
-        parsed_args = parser.parse_args(args)
-        command_func = parsed_args.func
+    parser = make_parser(commands)
+    parsed_args = parser.parse_args(args)
+    command_func = parsed_args.func
 
-        config = Config(env)
-        context = Context(parsed_args, config)
-        command_func(context)
-    except KeyboardInterrupt:
-        print("👋")
+    config = Config(env)
+    context = Context(parsed_args, config)
+    command_func(context)
 
 
 def cli(app_function=run):
     integration.check()
-    app_function(sys.argv[1:], os.environ)
+    try:
+        app_function(sys.argv[1:], os.environ.copy())
+    except KeyboardInterrupt:
+        print("👋")
+        return 1
