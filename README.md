@@ -1,5 +1,8 @@
 # DevUp
 
+[![CircleCI](https://circleci.com/gh/pior/devup.svg?style=svg)](https://circleci.com/gh/pior/devup)
+[![codecov](https://codecov.io/gh/pior/devup/branch/master/graph/badge.svg)](https://codecov.io/gh/pior/devup)
+
 CLI tool to manage your development projects.
 
 DevUp purpose is to let anyone easily start contributing to a project.
