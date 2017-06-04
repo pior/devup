@@ -7,3 +7,5 @@ dependencies:
 test:
   override:
     - py.test .
+    - flake8 devup
+    - flake8 tests
