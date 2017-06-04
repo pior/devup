@@ -6,6 +6,8 @@ dependencies:
 
 test:
   override:
-    - py.test .
+    - py.test --cov=devup tests/
     - flake8 devup
     - flake8 tests
+  post:
+    - codecov
