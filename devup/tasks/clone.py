@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from devup.tasks import Task, TaskShouldNotRun
 from devup.integration import set_cd_finalizer
 from devup.lib.project import Project
