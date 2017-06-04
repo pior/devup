@@ -4,9 +4,10 @@ from pathlib import Path
 class Config(object):
     """Devup global config.global
 
-    >>> config = Config()
+    >>> import os
+    >>> config = Config(os.environ)
     >>> config.projects_path
-    /home/michel/src
+    /home/pior/src
     """
 
     _VARIABLE_PREFIX = 'DEVUP_'
@@ -25,6 +26,9 @@ class Config(object):
             raise RuntimeError("Unknown config setting '%s'" % name)
         return value
 
+    def _get_path(self, name, default=None):
+        return Path(self._get(name, default=default)).expanduser()
+
     @property
     def projects_path(self):
-        return Path(self._get('PROJECTS_PATH')).expanduser()
+        return self._get_path('PROJECTS_PATH')
