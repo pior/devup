@@ -1,6 +1,5 @@
-import subprocess
-
 from devup.tasks import Task, TaskConfigError
+from devup.lib import command
 
 
 def parse_config(config):
@@ -27,10 +26,8 @@ class CustomCommand(Task):
             return True
         try:
             self._run_command(should_run_args)
-        except subprocess.CalledProcessError as err:
-            if err.returncode == 127:
-                self._crash(err)
-            return False
+        except command.NotFoundError as err:
+            self._crash(err)
         else:
             return True
 
@@ -38,6 +35,5 @@ class CustomCommand(Task):
         run_args, _ = parse_config(self._config)
         try:
             self._run_command(run_args)
-        except subprocess.CalledProcessError as err:
-            if err.returncode == 127:
-                self._crash(err)
+        except command.NotFoundError as err:
+            self._crash(err)

@@ -1,8 +1,8 @@
-import subprocess
 import sys
 import traceback
 
 from devup.utils import output
+from devup.lib import command
 
 
 class TaskShouldNotRun(Exception):
@@ -68,13 +68,13 @@ class Task(object):
 
     def _run_command(self, args):
         self._print(' '.join(args), 'command')
-        return self._context.run_command(args)
+        return command.run(args)
 
     def _safe_run_command(self, args):
         try:
-            return self._context.run_command(args)
-        except subprocess.CalledProcessError as err:
-            self._context.exit('command failed with error %s' % err.returncode)
+            return command.run(args)
+        except command.Error as err:
+            self._context.exit('command failed: %s' % err)
 
     def run(self):
         should_run = self._should_run()

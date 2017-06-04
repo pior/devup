@@ -1,20 +1,8 @@
-import subprocess
 import sys
 from pathlib import Path
 
 from devup.utils import output
 from devup.lib.project import Project
-
-
-def _cast_command_arg(arg):
-    if isinstance(arg, Path):
-        return str(arg)
-    else:
-        return arg
-
-
-def _cast_command_args(args):
-    return [_cast_command_arg(arg) for arg in args]
 
 
 class Context(object):
@@ -25,11 +13,6 @@ class Context(object):
     @staticmethod
     def write_output(s, style=None):
         output.write(s, style=style)
-
-    @staticmethod
-    def run_command(args):
-        args = _cast_command_args(args)
-        return subprocess.run(args, check=True)
 
     def crash(self, msg):
         self.write_output('💥 Crashed: %s\n' % msg, style='error')
