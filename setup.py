@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='devup',
-    version='0.0.1',
+    version='0.1.dev0',
     author='Pior Bastida',
     author_email='pior@pbastida.net',
     description='Command to manage your projects',

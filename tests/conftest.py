@@ -1,6 +1,23 @@
 import pytest
 
+from devup import app
 from devup.lib import command
+
+
+def wrapped_run(args, env=None):
+    if env is None:
+        env = {}
+    try:
+        app.run(args, env)
+    except SystemExit as exit:
+        return exit.code
+    else:
+        return 0
+
+
+@pytest.fixture()
+def run():
+    return wrapped_run
 
 
 @pytest.fixture()

@@ -1,5 +1,6 @@
 import argparse
 import os
+import pkg_resources
 import sys
 
 from devup import integration
@@ -25,8 +26,7 @@ def make_help(commands):
     return func
 
 
-def make_parser(commands):
-    parser = argparse.ArgumentParser()
+def setup_parser_commands(parser, commands):
     subparsers = parser.add_subparsers()
 
     def add_command(name, func, args):
@@ -45,10 +45,26 @@ def make_parser(commands):
     return parser
 
 
+def setup_parser_version(parser):
+    try:
+        version = pkg_resources.get_distribution('devup').version
+    except:
+        version = 'unknown'
+
+    parser.add_argument(
+        '--version',
+        action='version',
+        version='%%(prog)s %s' % version,
+    )
+
+
 def run(args, env):
     commands = [c() for c in command_classes]
 
-    parser = make_parser(commands)
+    parser = argparse.ArgumentParser(prog='de')
+    setup_parser_commands(parser, commands)
+    setup_parser_version(parser)
+
     parsed_args = parser.parse_args(args)
     command_func = parsed_args.func
 
