@@ -1,8 +1,7 @@
 import sys
 from pathlib import Path
 
-from devup.utils import output
-from devup.lib.project import Project
+from devup.lib import output, project
 
 
 class Context(object):
@@ -27,4 +26,4 @@ class Context(object):
 
     @property
     def project(self):
-        return Project(Path.cwd())
+        return project.Project(Path.cwd())

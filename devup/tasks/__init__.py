@@ -1,8 +1,7 @@
 import sys
 import traceback
 
-from devup.utils import output
-from devup.lib import command
+from devup.lib import command, output
 
 
 class TaskShouldNotRun(Exception):
