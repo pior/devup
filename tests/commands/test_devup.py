@@ -1,20 +1,18 @@
 import yaml
 
-from devup import app
 
-
-def test_devup_create_a_manifest(manifest):
-    app.run(['init'], {})
+def test_devup_create_a_manifest(appfunc, manifest):
+    appfunc(['init'])
     assert manifest.exists()
 
 
-def test_devup_doesnt_overwrite(manifest):
+def test_devup_doesnt_overwrite(appfunc, manifest):
     manifest.write('foobar')
-    app.run(['init'], {})
+    appfunc(['init'])
     assert manifest.read() == 'foobar'
 
 
-def test_devup_create_a_yaml_valid_manifest(manifest):
-    app.run(['init'], {})
+def test_devup_create_a_yaml_valid_manifest(appfunc, manifest):
+    appfunc(['init'])
     content = manifest.read()
     yaml.safe_load(content)

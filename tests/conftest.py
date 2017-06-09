@@ -4,19 +4,18 @@ from devup import app
 from devup.lib import command
 
 
-def wrapped_run(args, env=None):
-    if env is None:
-        env = {}
-    try:
-        app.run(args, env)
-    except SystemExit as exit:
-        return exit.code
-    else:
-        return 0
-
-
 @pytest.fixture()
-def run():
+def appfunc(projects, commands, finalizers):
+    def wrapped_run(args, env=None):
+        env_ = {'PROJECTS_PATH': projects}
+        if env:
+            env_.update(env)
+        try:
+            app.run(args, env_)
+        except SystemExit as exit:
+            return exit.code
+        else:
+            return 0
     return wrapped_run
 
 
@@ -31,11 +30,6 @@ def projects(tmpdir):
 @pytest.fixture()
 def project(projects):
     return projects.join('github.com', 'pior', 'devup')
-
-
-@pytest.fixture()
-def testenv(projects, finalizers):
-    return {'PROJECTS_PATH': projects}
 
 
 @pytest.fixture()

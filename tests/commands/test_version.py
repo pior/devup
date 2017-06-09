@@ -1,5 +1,7 @@
-def test_version(run, capsys):
-    exit_code = run(['--version'])
+
+
+def test_version(appfunc, capsys):
+    exit_code = appfunc(['--version'])
 
     assert exit_code == 0
 
