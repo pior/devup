@@ -15,7 +15,7 @@ setup(
     author_email='pior@pbastida.net',
     description='Command to manage your projects',
     license='BSD',
-    keywords='development github',
+    keywords='project management github invoke makefile task',
     url='https://github.com/pior/devup',
     long_description=read('README.md'),
     classifiers=[
