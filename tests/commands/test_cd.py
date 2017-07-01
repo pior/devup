@@ -1,16 +1,14 @@
 
-def test_with_no_arg(app, capsys):
+def test_with_no_arg(app, assert_in_output):
     app(['cd'], expect_status=2)
 
-    out, err = capsys.readouterr()
-    assert 'arguments are required: project' in err
+    assert_in_output('arguments are required: project', stderr=True)
 
 
-def test_with_unknown_project(app, capsys):
+def test_with_unknown_project(app, assert_in_output):
     app(['cd', 'nope'])
 
-    out, err = capsys.readouterr()
-    assert 'Unknown project nope' in out
+    assert_in_output('Unknown project nope')
 
 
 def test_finalizer(app, project, finalizers):

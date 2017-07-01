@@ -5,6 +5,16 @@ from devup.lib import command
 
 
 @pytest.fixture()
+def assert_in_output(capsys):
+    def func(*substrings, stderr=False):
+        out, err = capsys.readouterr()
+        output = err if stderr else out
+        for substring in substrings:
+            assert substring in output
+    return func
+
+
+@pytest.fixture()
 def app(monkeypatch, projectsdir, project, other_project, commands):
     monkeypatch.chdir(project)
     monkeypatch.setenv('PROJECTS_PATH', str(projectsdir))

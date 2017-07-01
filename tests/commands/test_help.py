@@ -1,16 +1,12 @@
 
 
-def test_help(app, capsys):
+def test_help(app, assert_in_output):
     app(['help'])
 
-    out, err = capsys.readouterr()
-    assert 'List of available commands' in out
-    assert 'de init' in out
-    assert 'de cd' in out
+    assert_in_output('List of available commands', 'de init', 'de cd')
 
 
-def test_usage(app, capsys):
+def test_usage(app, assert_in_output):
     app([])
 
-    out, err = capsys.readouterr()
-    assert 'List of available commands' in out
+    assert_in_output('List of available commands')

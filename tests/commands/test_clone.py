@@ -1,16 +1,14 @@
 
-def test_with_no_arg(app, capsys):
+def test_with_no_arg(app, assert_in_output):
     app(['clone'], expect_status=2)
 
-    out, err = capsys.readouterr()
-    assert 'arguments are required: repository' in err
+    assert_in_output('arguments are required: repository', stderr=True)
 
 
-def test_already_cloned(app, capsys):
+def test_already_cloned(app, assert_in_output):
     app(['clone', 'pior/devup'])
 
-    out, err = capsys.readouterr()
-    assert 'project already exists' in out
+    assert_in_output('project already exists')
 
 
 def test_cloning(app, projectsdir, commands):
