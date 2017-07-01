@@ -1,9 +1,7 @@
 
 
-def test_version(appfunc, capsys):
-    exit_code = appfunc(['--version'])
-
-    assert exit_code == 0
+def test_version(app, capsys):
+    app(['--version'])
 
     out, err = capsys.readouterr()
     assert 'de ' in out

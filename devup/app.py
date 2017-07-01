@@ -58,7 +58,7 @@ def setup_parser_version(parser):
     )
 
 
-def run(args, env):
+def run(args):
     commands = [c() for c in command_classes]
 
     parser = argparse.ArgumentParser(prog='de')
@@ -68,7 +68,7 @@ def run(args, env):
     parsed_args = parser.parse_args(args)
     command_func = parsed_args.func
 
-    config = Config(env)
+    config = Config(os.environ.copy())
     context = Context(parsed_args, config)
     command_func(context)
 
@@ -76,7 +76,7 @@ def run(args, env):
 def cli(app_function=run):
     integration.check()
     try:
-        app_function(sys.argv[1:], os.environ.copy())
+        app_function(sys.argv[1:])
     except KeyboardInterrupt:
         print("👋")
         return 1

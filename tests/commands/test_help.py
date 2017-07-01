@@ -1,7 +1,7 @@
 
 
-def test_help(appfunc, capsys):
-    appfunc(['help'])
+def test_help(app, capsys):
+    app(['help'])
 
     out, err = capsys.readouterr()
     assert 'List of available commands' in out
@@ -9,8 +9,8 @@ def test_help(appfunc, capsys):
     assert 'de cd' in out
 
 
-def test_usage(appfunc, capsys):
-    appfunc([])
+def test_usage(app, capsys):
+    app([])
 
     out, err = capsys.readouterr()
     assert 'List of available commands' in out

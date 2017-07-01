@@ -1,35 +1,43 @@
 import pytest
 
-from devup import app
+from devup import app as devup_app
 from devup.lib import command
 
 
 @pytest.fixture()
-def appfunc(projects, commands, finalizers):
-    def wrapped_run(args, env=None):
-        env_ = {'PROJECTS_PATH': projects}
-        if env:
-            env_.update(env)
+def app(monkeypatch, projectsdir, project, other_project, commands):
+    monkeypatch.chdir(project)
+    monkeypatch.setenv('PROJECTS_PATH', str(projectsdir))
+
+    def func(args, expect_status=0):
         try:
-            app.run(args, env_)
+            devup_app.run(args)
         except SystemExit as exit:
-            return exit.code
+            code = exit.code
         else:
-            return 0
-    return wrapped_run
+            code = 0
+        assert code == expect_status
+    return func
 
 
 @pytest.fixture()
-def projects(tmpdir):
-    projectdir = tmpdir
-    projectdir.join('github.com', 'pior', 'project1').ensure(dir=True)
-    projectdir.join('github.com', 'pior', 'devup').ensure(dir=True)
+def projectsdir(tmpdir):
+    projectsdir = tmpdir  # Get one tmpdir and call it our projects directory
+    return projectsdir
+
+
+@pytest.fixture()
+def project(projectsdir):
+    projectdir = projectsdir.join('github.com', 'pior', 'devup')
+    projectdir.ensure(dir=True)
     return projectdir
 
 
 @pytest.fixture()
-def project(projects):
-    return projects.join('github.com', 'pior', 'devup')
+def other_project(projectsdir):
+    projectdir = projectsdir.join('github.com', 'pior', 'other')
+    projectdir.ensure(dir=True)
+    return projectdir
 
 
 @pytest.fixture()
@@ -44,8 +52,7 @@ def finalizers(tmpdir, monkeypatch):
 
 
 @pytest.fixture()
-def manifest(project, monkeypatch):
-    monkeypatch.chdir(project)
+def manifest(project):
     devupyml = project.join('devup.yml')
     return devupyml
 
