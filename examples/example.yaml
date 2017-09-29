@@ -1,0 +1,13 @@
+up:
+  - pip
+  - setuptools_develop
+  - run: flake8 --install-hook git
+    unless: grep -q flake8 .git/hooks/pre-commit
+
+test:
+  - run: py.test
+  - run: run-integration-test.sh
+    if-env: CI
+
+lint:
+  - run: flake8 devup

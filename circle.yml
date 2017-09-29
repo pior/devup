@@ -1,0 +1,10 @@
+dependencies:
+  override:
+    - make setup
+
+test:
+  override:
+    - make test
+    - make lint
+  post:
+    - codecov

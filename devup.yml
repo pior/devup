@@ -1,0 +1,17 @@
+up:
+  - pip
+  - setuptools_develop
+
+test:
+  - run: py.test
+
+lint:
+  - run: flake8 devup
+
+upgrade:
+  - run:
+
+
+poi:
+  - run: echo one > output.out
+  - run: echo two
