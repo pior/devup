@@ -1,13 +1,10 @@
 dependencies:
   override:
-    - pip install -U pip
-    - pip install -e .
-    - pip install -r requirements-dev.txt
+    - make setup
 
 test:
   override:
-    - py.test --cov=devup tests/
-    - flake8 devup
-    - flake8 tests
+    - make test
+    - make lint
   post:
     - codecov

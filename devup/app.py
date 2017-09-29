@@ -2,17 +2,17 @@ import argparse
 import os
 import pkg_resources
 import sys
+from pathlib import Path
 
 from devup import integration
 from devup.lib.config import Config
 from devup.lib.context import Context
+from devup.lib.project import Project
 
 from devup.commands.cd import Cd
 from devup.commands.clone import Clone
 from devup.commands.init import Init
-from devup.commands.up import Up
-
-command_classes = [Init, Clone, Cd, Up]
+from devup.commands.custom import Custom
 
 
 def make_help(commands):
@@ -42,8 +42,6 @@ def setup_parser_commands(parser, commands):
     add_command('help', help_func, [])
     parser.set_defaults(func=help_func)
 
-    return parser
-
 
 def setup_parser_version(parser):
     try:
@@ -58,8 +56,19 @@ def setup_parser_version(parser):
     )
 
 
-def run(args):
+def make_commands(project):
+    command_classes = [Init, Clone, Cd]
     commands = [c() for c in command_classes]
+    for name in project.command_names:
+        command = Custom(name)
+        commands.append(command)
+    return commands
+
+
+def run(args):
+    config = Config(os.environ.copy())
+    project = Project(Path.cwd())
+    commands = make_commands(project)
 
     parser = argparse.ArgumentParser(prog='de')
     setup_parser_commands(parser, commands)
@@ -68,8 +77,7 @@ def run(args):
     parsed_args = parser.parse_args(args)
     command_func = parsed_args.func
 
-    config = Config(os.environ.copy())
-    context = Context(parsed_args, config)
+    context = Context(parsed_args, config, project)
     command_func(context)
 
 

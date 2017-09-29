@@ -1,39 +1,34 @@
-from devup.tasks import Task, TaskConfigError
+import os
+
+from devup.tasks import Task
 from devup.lib import command
 
 
-def parse_config(config):
-    should_run_args = None
-
-    if isinstance(config, str):
-        run_args = config.split()
-    elif isinstance(config, dict):
-        if 'command' not in config:
-            raise TaskConfigError("Missing 'command' key")
-        run_args = config['command'].split()
-    else:
-        raise TaskConfigError("Invalid task config")
-
-    return run_args, should_run_args
-
-
 class CustomCommand(Task):
-    name = 'custom'
+    name = 'run'
 
     def _should_run(self):
-        _, should_run_args = parse_config(self._config)
-        if not should_run_args:
-            return True
-        try:
-            self._run_command(should_run_args)
-        except command.NotFoundError as err:
-            self._crash(err)
-        else:
-            return True
+        if 'if' in self._config:
+            if_args = self._config['if']
+            try:
+                self._run_command(if_args)
+            except command.NotFoundError as err:
+                self._crash(err)
+            except command.Failed:
+                return False
+
+        if 'if-env' in self._config:
+            env = self._config['if-env']
+            if env not in os.environ:
+                return False
+
+        return True
 
     def _run(self):
-        run_args, _ = parse_config(self._config)
+        run_args = self._config['run']
         try:
             self._run_command(run_args)
         except command.NotFoundError as err:
             self._crash(err)
+        except command.Failed:
+            pass

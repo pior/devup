@@ -24,7 +24,7 @@ def test_cloning(app, projectsdir, commands):
     assert commands[0] == args
 
 
-def test_change_dir(app, projectsdir, finalizers):
+def test_change_dir(app, projectsdir, commands, finalizers):
     app(['clone', 'pior/new_project'])
 
     new_project_path = projectsdir.join('github.com', 'pior', 'new_project')

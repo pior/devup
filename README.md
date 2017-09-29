@@ -50,3 +50,17 @@ Then, automatic discovery will try to make command declaration optional as much 
 Still, DevUp will always stay transparent regarding its actions to help contributors understand the tools used by a project.
 
 DevUp will be language agnostic. (although it may start a bit Python-centric since it's the language of choice of the initial author)
+
+## Development
+
+DevUp is not using itself yet, but good ol' Make is here for us.
+
+```shell
+mkdir -p ~/src/github.com/pior
+cd ~/src/github.com/pior
+git clone git@github.com:pior/devup.git
+cd devup
+make setup
+make test
+make lint
+```

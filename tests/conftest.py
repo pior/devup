@@ -15,7 +15,7 @@ def assert_in_output(capsys):
 
 
 @pytest.fixture()
-def app(monkeypatch, projectsdir, project, other_project, commands):
+def app(monkeypatch, projectsdir, project, other_project):
     monkeypatch.chdir(project)
     monkeypatch.setenv('PROJECTS_PATH', str(projectsdir))
 

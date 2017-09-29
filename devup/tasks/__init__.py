@@ -1,3 +1,4 @@
+import shlex
 import sys
 import traceback
 
@@ -61,12 +62,12 @@ class Task(object):
         return True
 
     def _print(self, message, style):
-        self._context.write_output('🔍 ', style='bold')
+        self._context.write_output('☀️  ', style='bold')
         self._context.write_output(self.name, style='header')
         self._context.write_output(': %s\n' % message, style=style)
 
     def _run_command(self, args):
-        self._print(' '.join(args), 'command')
+        self._print(args, 'command')
         return command.run(args)
 
     def _safe_run_command(self, args):

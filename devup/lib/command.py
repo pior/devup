@@ -26,10 +26,14 @@ def _cast_command_args(args):
 
 
 def run(args):
-    args = _cast_command_args(args)
+    if isinstance(args, list):
+        args = _cast_command_args(args)
+        shell = False
+    else:
+        shell = True
 
     try:
-        return subprocess.run(args, check=True)
+        return subprocess.run(args, check=True, shell=shell)
     except subprocess.CalledProcessError as err:
         if err.returncode == 127:
             raise NotFoundError(err)

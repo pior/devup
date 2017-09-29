@@ -1,13 +1,13 @@
 import sys
-from pathlib import Path
 
-from devup.lib import output, project
+from devup.lib import output
 
 
 class Context(object):
-    def __init__(self, args, config):
+    def __init__(self, args, config, project):
         self.args = args
         self.config = config
+        self.project = project
 
     @staticmethod
     def write_output(s, style=None):
@@ -23,7 +23,3 @@ class Context(object):
 
     def warning(self, msg):
         self.write_output('%s\n' % msg, style='warning')
-
-    @property
-    def project(self):
-        return project.Project(Path.cwd())

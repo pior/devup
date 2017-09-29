@@ -1,0 +1,12 @@
+dependencies:
+  pre:
+    - pip install devup
+  override:
+    - de up
+
+test:
+  override:
+    - de test
+    - de lint
+  post:
+    - codecov
